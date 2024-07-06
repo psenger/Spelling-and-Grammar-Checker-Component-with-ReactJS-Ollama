@@ -4,9 +4,9 @@
  * @interface
  */
 interface ApiParameters {
-    protocol?: string;
-    hostname?: string;
-    port?: number;
+    protocol?: string
+    hostname?: string
+    port?: number
 }
 
 /**
@@ -30,7 +30,7 @@ interface sendOllamaGenerateParameters {
  * @returns {string} The generated Ollama API endpoint URL.
  */
 const ollamaApiEndpoint = (props: ApiParameters = {}): string => {
-    const {protocol = "http", hostname = "127.0.0.1", port} = props;
+    const {protocol = "http", hostname = "127.0.0.1", port} = props
     return `${protocol}://${hostname}${port ? ':' : ''}${port ? port : ''}/api/generate`
 }
 
@@ -52,8 +52,8 @@ export const sendOllamaGenerateRequest = async (props: sendOllamaGenerateParamet
         }),
         headers: {'Content-Type': 'application/json'},
         ...fetchOptions,
-    });
-    if (!response.ok) {
+    })
+    if (response.ok) {
         return response.json()
     }
     throw new Error('Error from server')

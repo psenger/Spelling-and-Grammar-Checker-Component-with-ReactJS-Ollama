@@ -10,7 +10,11 @@
     margin-bottom: 10px;
     white-space: pre-wrap;
 }
-span {
+
+.editable-div__grammar {
+    background-color: yellow;
+}
+.editable-div__spelling {
     background-color: yellow;
 }
 .editable-div__placeholder::before {
@@ -18,4 +22,73 @@ span {
     color: gray;
     pointer-events: none;
     display: block;
+}
+.btn {
+    min-width: 10rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-block-start: 1rem;
+    padding-block-end: 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.btn--primary {
+    color: #ffffff; /* Text color */
+    background-color: #007bff; /* Background color */
+}
+
+.btn--primary:hover,
+.btn--primary:focus {
+    background-color: #0056b3; /* Darker shade for hover/focus */
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5); /* Focus ring */
+    outline: none; /* Remove default outline */
+}
+
+.btn--primary:active {
+    background-color: #004085; /* Even darker shade for active */
+    box-shadow: none;
+}
+
+.btn--primary:focus {
+    outline: 2px solid #0056b3; /* Custom focus outline */
+    outline-offset: 2px;
+}
+.btn--secondary {
+    color: #ffffff; /* Text color */
+    background-color: #6c757d; /* Background color */
+    border: 1px solid #6c757d; /* Border color */
+}
+
+.btn--secondary:hover,
+.btn--secondary:focus {
+    background-color: #5a6268; /* Darker shade for hover/focus */
+    border-color: #545b62; /* Darker border color for hover/focus */
+    box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5); /* Focus ring */
+    outline: none; /* Remove default outline */
+}
+
+.btn--secondary:active {
+    background-color: #4e555b; /* Even darker shade for active */
+    border-color: #434e53; /* Even darker border color for active */
+    box-shadow: none;
+}
+
+.btn--secondary:focus {
+    outline: 2px solid #5a6268; /* Custom focus outline */
+    outline-offset: 2px;
+}
+.stack__horizontal {
+    display: flex;
+    gap: 1rem;
+}
+.stack__vertical {
+    flex-direction: column;
+    display: flex;
+    gap: 1rem;
+}
+.form-validation__success {
+    color: limegreen;
+}
+.form-validation__error {
+    color: orangered;
 }
