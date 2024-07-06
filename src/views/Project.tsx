@@ -2,6 +2,7 @@ import {FaSpellCheck, FaRegCheckCircle, FaExclamation, FaCompress, FaDiaspora} f
 import {useForm, useController, UseControllerProps} from 'react-hook-form'
 import ControlledEditableDiv from '../component/ControlledEditableDiv.tsx'
 import {sendOllamaGenerateRequest} from '../services/GrammarAndSpellingCheck.tsx'
+import {useState} from "react";
 
 type FormValues = {
     content: string
@@ -22,6 +23,7 @@ function Input(props: UseControllerProps<FormValues>) {
 }
 
 export default function Project() {
+    const [disabled, setDisabled] = useState(false)
     const {handleSubmit, control, watch, setValue} = useForm<FormValues>({
         defaultValues: {
             content: '',
@@ -33,16 +35,22 @@ export default function Project() {
 
         console.log('content submitted to the server',data)
     }
-    const onCheck = () => {
-        sendOllamaGenerateRequest({content})
-            .then((response) => {
-                setValue('content', response.response)
-            })
+    const onCheck = async () => {
+        setDisabled(true)
+        try {
+            const results = await sendOllamaGenerateRequest({content})
+            setValue('content', results.response)
+        } catch (e) {
+            // pop-toast
+            console.log(e)
+        } finally {
+            setDisabled(false)
+        }
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className='stack__vertical'>
-                <Input name='content' control={control} rules={{required: true}}/>
+                <Input name='content' control={control} rules={{required: true}} disabled={disabled}/>
                 <div className='stack__horizontal'>
                     <button className='btn btn--primary' onClick={onCheck} type='button'><FaSpellCheck/> Check Spelling</button>
                     <input className='btn btn--secondary' type='submit'/>
