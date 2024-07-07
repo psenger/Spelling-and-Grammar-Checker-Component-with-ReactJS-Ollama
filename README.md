@@ -28,6 +28,20 @@ npm run dev
 
 Contributions are welcome. Please feel free to fork, clone, and submit your pull requests.
 
+## Explanation of Components
+
+1. EditableDiv:
+   * Handles rendering and user input.
+   * Manages focus, keydown, and paste events.
+3. ControlledEditableDiv:
+    * Wraps EditableDiv and sanitizes input before passing it to onChange.
+3. Input:
+   * Integrates with React Hook Form using useController.
+   * Updates EditableDiv content based on updatedContent.
+4. Project:
+   * Manages form state and handles submission.
+   * Handles API call for spelling check and updates form fields accordingly.
+
 ## License
 
 This project is licensed under the [MIT license](LICENSE.md).

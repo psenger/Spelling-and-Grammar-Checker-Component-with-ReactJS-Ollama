@@ -1,22 +1,54 @@
 * {
     font-family: Arial, sans-serif;
 }
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
 
 .editable-div {
-    width: 100%;
     height: 300px;
     border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
     white-space: pre-wrap;
+    position: relative;
+    min-height: 1.2em;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+}
+.editable-div > span[data-correct] {
+    text-decoration-color: red;
+    text-decoration-line: spelling-error;
+    position: relative;
 }
 
-.editable-div__grammar {
-    background-color: yellow;
+.editable-div > span[data-correct]::after {
+    content: attr(data-correct);
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    white-space: nowrap;
+    font-size: 12px;
+    top: 100%; /* Position the tooltip below the element */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s;
 }
-.editable-div__spelling {
-    background-color: yellow;
+
+.editable-div > span[data-correct]:hover::after {
+    opacity: 1;
+    visibility: visible;
 }
+
 .editable-div__placeholder::before {
     content: attr(data-placeholder);
     color: gray;

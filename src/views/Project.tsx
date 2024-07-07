@@ -1,30 +1,17 @@
-import {FaSpellCheck, FaRegCheckCircle, FaExclamation, FaCompress, FaDiaspora} from 'react-icons/fa'
-import {useForm, useController, UseControllerProps} from 'react-hook-form'
-import ControlledEditableDiv from '../component/ControlledEditableDiv.tsx'
-import {sendOllamaGenerateRequest} from '../services/GrammarAndSpellingCheck.tsx'
-import {useState} from "react";
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { FaSpellCheck } from 'react-icons/fa'
+import Input from '../component/Input'
+import { sendOllamaGenerateRequest } from '../services/GrammarAndSpellingCheck'
 
 type FormValues = {
     content: string
 }
 
-function Input(props: UseControllerProps<FormValues>) {
-    const {field, fieldState} = useController(props)
-    return (
-        <div className='stack__vertical'>
-            <ControlledEditableDiv {...field} placeholder='Enter some text...' className='editable-div'/>
-            {fieldState.isTouched && (<span><FaDiaspora/> Touched</span>)}
-            {fieldState.isDirty && (<span><FaCompress/> Dirty</span>)}
-            {fieldState.invalid
-                ? (<span><FaExclamation className='form-validation__error'/> Invalid</span>)
-                : (<span><FaRegCheckCircle className='form-validation__success'/> Valid</span>)}
-        </div>
-    )
-}
-
 export default function Project() {
     const [disabled, setDisabled] = useState(false)
-    const {handleSubmit, control, watch, setValue} = useForm<FormValues>({
+    const [updatedContent, setUpdatedContent] = useState('')
+    const { handleSubmit, control, watch, setValue } = useForm<FormValues>({
         defaultValues: {
             content: '',
         },
@@ -32,14 +19,14 @@ export default function Project() {
     })
     const content = watch('content')
     const onSubmit = (data: FormValues) => {
-
-        console.log('content submitted to the server',data)
+        alert(data.content)
     }
     const onCheck = async () => {
         setDisabled(true)
         try {
-            const results = await sendOllamaGenerateRequest({content})
+            const results = await sendOllamaGenerateRequest({ content })
             setValue('content', results.response)
+            setUpdatedContent(results.response)  // Update state with new content
         } catch (e) {
             // pop-toast
             console.log(e)
@@ -47,10 +34,11 @@ export default function Project() {
             setDisabled(false)
         }
     }
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className='stack__vertical'>
-                <Input name='content' control={control} rules={{required: true}} disabled={disabled}/>
+            <div className='stack__vertical' style={{ padding: '1rem' }}>
+                <Input name='content' control={control} rules={{ required: true }} disabled={disabled} updatedContent={updatedContent} />
                 <div className='stack__horizontal'>
                     <button className='btn btn--primary' onClick={onCheck} type='button'><FaSpellCheck/> Check Spelling</button>
                     <input className='btn btn--secondary' type='submit'/>
